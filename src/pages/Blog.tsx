@@ -258,354 +258,108 @@ const Blog: React.FC = () => {
       case "Programming":
         return "programming";
       case "Tech News":
-        return "technology";
+        return "latest technology trends";
       default:
-        return "technology";
+        return "web development and software engineering";
     }
   }, [selectedTag, searchTerm]);
 
-  const newsApiKey = import.meta.env.VITE_NEWSAPI_KEY as string | undefined;
-  const apitubeKey = import.meta.env.VITE_APITUBE_API_KEY as string | undefined;
-  const currentApiKey = import.meta.env.VITE_CURRENTAPI_KEY as string | undefined;
-  const polygonApiKey = import.meta.env.VITE_POLYGON_API_KEY as string | undefined;
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
   useEffect(() => {
     const controller = new AbortController();
-    
+
     const fetchNews = async () => {
       setLoading(true);
       setError(null);
+
       try {
-
-        // Debug which keys are present (do NOT log actual keys)
-        console.log("[Blog] API keys presence:", {
-          newsApi: Boolean(newsApiKey),
-          apitube: Boolean(apitubeKey),
-          polygon: Boolean(polygonApiKey),
-          currentApi: Boolean(currentApiKey),
-          queryTerm,
-          selectedTag,
-        });
-
-        if (newsApiKey) {
-          // Prefer NewsAPI if available
-          const params = new URLSearchParams({
-            q: queryTerm,
-            language: "en",
-            pageSize: "12",
-            sortBy: "publishedAt",
-            apiKey: newsApiKey,
+        // 1. Try Proxy (Production)
+        if (!isLocal) {
+          const res = await fetch(`/api/news?q=${encodeURIComponent(queryTerm)}`, {
+            signal: controller.signal
           });
-          const res = await fetch(
-            `https://newsapi.org/v2/everything?${params.toString()}`,
-            { signal: controller.signal }
-          );
-          if (!res.ok) {
-            const text = await res.text().catch(() => "");
-            console.warn("[Blog] NewsAPI error (falling back)", res.status, text);
-            // If it's a 426 or any other non-ok response, we check if other keys exist to fallback
-            if (apitubeKey || polygonApiKey || currentApiKey) {
-               // Continue to next fallback
-            } else {
-              throw new Error(`Failed to fetch news from NewsAPI (${res.status})`);
-            }
-          } else {
+          if (res.ok) {
             const data = await res.json();
-            const articles: any[] = data.articles || [];
-            console.log(`[Blog] NewsAPI returned ${articles.length} articles`);
-            const mapped: BlogPost[] = articles.map((a: any, idx: number) => {
-              const title: string = a.title || "Untitled";
-              const description: string = a.description || a.content || "";
-              const publishedAt: string =
-                a.publishedAt || new Date().toISOString();
-              const image: string | undefined = a.urlToImage;
-              const content: string = a.content || description;
-              const words = (content || description)
-                .split(/\s+/)
-                .filter(Boolean).length;
-              const minutes = Math.max(1, Math.ceil(words / 200));
-              const derivedTags: string[] = [];
-              const lower = (title + " " + description).toLowerCase();
-              if (/(react|vue|angular|css|frontend|ui|ux)/.test(lower))
-                derivedTags.push("Frontend");
-              if (/(node|docker|devops|server|database|backend)/.test(lower))
-                derivedTags.push("Backend");
-              if (
-                /(cybersecurity|security|hacking|malware|data protection|privacy)/.test(
-                  lower
-                )
-              )
-                derivedTags.push("Cybersecurity");
-              if (
-                /(programming|javascript|typescript|es6|python|java|c\+\+|c#|go|rust|swift|kotlin|php|ruby|coding|software development|algorithm|data structure)/.test(
-                  lower
-                )
-              )
-                derivedTags.push("Programming");
-              if (/(tech news|technology|trends|ai|industry)/.test(lower))
-                derivedTags.push("Tech News");
-              return {
-                id: `${a.source?.id || a.url || Date.now()}-${idx}`,
-                title,
-                excerpt: description,
-                content,
-                publishedAt,
-                readTime: `${minutes} min read`,
-                tags: derivedTags.length ? derivedTags : ["Tech News"],
-                image,
-              };
-            });
-            setFetchedPosts(mapped);
-            setLoading(false);
-            return; // Exit successful fetch
+            const articles = data.articles || [];
+            if (articles.length > 0) {
+              setFetchedPosts(articles.map((a: any, idx: number) => mapArticle(a, idx, data.source || 'News')));
+              setLoading(false);
+              return;
+            }
           }
         }
 
-        if (apitubeKey) {
-          // Fallback to APITube
-          const params = new URLSearchParams({
-            title: queryTerm,
-            "language.code": "en",
-            limit: "12",
-          });
-          const res = await fetch(
-            `https://api.apitube.io/v1/news/everything?${params.toString()}`,
-            {
-              headers: { "X-API-Key": apitubeKey },
-              signal: controller.signal,
-            }
-          );
-          if (!res.ok) {
-            const text = await res.text().catch(() => "");
-            console.warn("[Blog] APITube error (falling back)", res.status, text);
-            if (polygonApiKey || currentApiKey) {
-               // Continue
-            } else {
-              throw new Error(`Failed to fetch news from APITube (${res.status})`);
-            }
-          } else {
+        // 2. Try Direct (Local or Proxy Fallback)
+        const keys = {
+          news: import.meta.env.VITE_NEWSAPI_KEY,
+          apitube: import.meta.env.VITE_APITUBE_API_KEY,
+        };
+
+        if (keys.news) {
+          const res = await fetch(`https://newsapi.org/v2/everything?q=${encodeURIComponent(queryTerm)}&language=en&pageSize=12&apiKey=${keys.news}`, { signal: controller.signal });
+          if (res.ok) {
             const data = await res.json();
-            const articles: any[] = data.articles || data.data || [];
-            console.log(`[Blog] APITube returned ${articles.length} articles`);
-            const mapped: BlogPost[] = articles.map((a, idx) => {
-              const title: string = a.title || a.headline || "Untitled";
-              const description: string =
-                a.description || a.summary || a.excerpt || "";
-              const publishedAt: string =
-                a.published_at ||
-                a.publishedAt ||
-                a.date ||
-                new Date().toISOString();
-              const image: string | undefined =
-                a.image_url || a.image || a.thumbnail;
-              const content: string = a.content || description;
-              const words = (content || description)
-                .split(/\s+/)
-                .filter(Boolean).length;
-              const minutes = Math.max(1, Math.ceil(words / 200));
-              const derivedTags: string[] = [];
-              const lower = (title + " " + description).toLowerCase();
-              if (/(react|vue|angular|css|frontend|ui|ux)/.test(lower))
-                derivedTags.push("Frontend");
-              if (/(node|docker|devops|server|database|backend)/.test(lower))
-                derivedTags.push("Backend");
-              if (
-                /(cybersecurity|security|hacking|malware|data protection|privacy)/.test(
-                  lower
-                )
-              )
-                derivedTags.push("Cybersecurity");
-              if (
-                /(programming|javascript|typescript|es6|python|java|c\+\+|c#|go|rust|swift|kotlin|php|ruby|coding|software development|algorithm|data structure)/.test(
-                  lower
-                )
-              )
-                derivedTags.push("Programming");
-              if (/(tech news|technology|trends|ai|industry)/.test(lower))
-                derivedTags.push("Tech News");
-              return {
-                id:
-                  a.id?.toString?.() ||
-                  a._id?.toString?.() ||
-                  `${Date.now()}-${idx}`,
-                title,
-                excerpt: description,
-                content,
-                publishedAt,
-                readTime: `${minutes} min read`,
-                tags: derivedTags.length ? derivedTags : ["Web Development"],
-                image,
-              };
-            });
-            setFetchedPosts(mapped);
-            setLoading(false);
-            return;
+            if (data.articles?.length) {
+              setFetchedPosts(data.articles.map((a: any, idx: number) => mapArticle(a, idx, 'NewsAPI')));
+              setLoading(false);
+              return;
+            }
           }
         }
 
-        if (polygonApiKey) {
-          // Third fallback to Polygon.io
-          const params = new URLSearchParams({
-            q: queryTerm,
-            limit: "12",
-            apikey: polygonApiKey,
+        if (keys.apitube) {
+          const res = await fetch(`https://api.apitube.io/v1/news/everything?title=${encodeURIComponent(queryTerm)}&limit=12`, {
+            headers: { 'X-API-Key': keys.apitube },
+            signal: controller.signal
           });
-          const res = await fetch(
-            `https://api.polygon.io/v1/reference/news?${params.toString()}`,
-            { signal: controller.signal }
-          );
-          if (!res.ok) {
-            const text = await res.text().catch(() => "");
-            console.warn("[Blog] Polygon error (falling back)", res.status, text);
-            if (currentApiKey) {
-               // Continue
-            } else {
-              throw new Error(`Failed to fetch news from Polygon (${res.status})`);
-            }
-          } else {
+          if (res.ok) {
             const data = await res.json();
-            const articles: any[] = data.results || [];
-            console.log(`[Blog] Polygon returned ${articles.length} articles`);
-            const mapped: BlogPost[] = articles.map((a: any, idx: number) => {
-              const title: string = a.title || "Untitled";
-              const description: string = a.description || a.content || "";
-              const publishedAt: string =
-                a.published_utc || new Date().toISOString();
-              const image: string | undefined = a.image_url;
-              const content: string = a.content || description;
-              const words = (content || description)
-                .split(/\s+/)
-                .filter(Boolean).length;
-              const minutes = Math.max(1, Math.ceil(words / 200));
-              const derivedTags: string[] = [];
-              const lower = (title + " " + description).toLowerCase();
-              if (/(react|vue|angular|css|frontend|ui|ux)/.test(lower))
-                derivedTags.push("Frontend");
-              if (/(node|docker|devops|server|database|backend)/.test(lower))
-                derivedTags.push("Backend");
-              if (
-                /(cybersecurity|security|hacking|malware|data protection|privacy)/.test(
-                  lower
-                )
-              )
-                derivedTags.push("Cybersecurity");
-              if (
-                /(programming|javascript|typescript|es6|python|java|c\+\+|c#|go|rust|swift|kotlin|php|ruby|coding|software development|algorithm|data structure)/.test(
-                  lower
-                )
-              )
-                derivedTags.push("Programming");
-              if (/(tech news|technology|trends|ai|industry)/.test(lower))
-                derivedTags.push("Tech News");
-              return {
-                id: `${a.id || a.article_url || Date.now()}-${idx}`,
-                title,
-                excerpt: description,
-                content,
-                publishedAt,
-                readTime: `${minutes} min read`,
-                tags: derivedTags.length ? derivedTags : ["Tech News"],
-                image,
-              };
-            });
-            setFetchedPosts(mapped);
-            setLoading(false);
-            return;
-          }
-        }
-
-        if (currentApiKey) {
-          // Final fallback to CurrentAPI
-          const params = new URLSearchParams({
-            q: queryTerm,
-            lang: "en",
-            limit: "12",
-          });
-          const res = await fetch(
-            `https://api.currentapi.services/v1/news?${params.toString()}`,
-            {
-              headers: { "X-API-Key": currentApiKey },
-              signal: controller.signal,
+            const articles = data.articles || data.data || [];
+            if (articles.length) {
+              setFetchedPosts(articles.map((a: any, idx: number) => mapArticle(a, idx, 'APITube')));
+              setLoading(false);
+              return;
             }
-          );
-          if (!res.ok) {
-            const text = await res.text().catch(() => "");
-            console.error("[Blog] CurrentAPI error", res.status, text);
-            throw new Error(`Failed to fetch news from CurrentAPI (${res.status})`);
           }
-          const data = await res.json();
-          const articles: any[] = data.articles || data.data || [];
-          console.log(`[Blog] CurrentAPI returned ${articles.length} articles`);
-          const mapped: BlogPost[] = articles.map((a, idx) => {
-            const title: string = a.title || a.headline || "Untitled";
-            const description: string =
-              a.description || a.summary || a.excerpt || "";
-            const publishedAt: string =
-              a.published_at ||
-              a.publishedAt ||
-              a.date ||
-              new Date().toISOString();
-            const image: string | undefined =
-              a.image_url || a.image || a.thumbnail;
-            const content: string = a.content || description;
-            const words = (content || description)
-              .split(/\s+/)
-              .filter(Boolean).length;
-            const minutes = Math.max(1, Math.ceil(words / 200));
-            const derivedTags: string[] = [];
-            const lower = (title + " " + description).toLowerCase();
-            if (/(react|vue|angular|css|frontend|ui|ux)/.test(lower))
-              derivedTags.push("Frontend");
-            if (/(node|docker|devops|server|database|backend)/.test(lower))
-              derivedTags.push("Backend");
-            if (
-              /(cybersecurity|security|hacking|malware|data protection|privacy)/.test(
-                lower
-              )
-            )
-              derivedTags.push("Cybersecurity");
-            if (
-              /(programming|javascript|typescript|es6|python|java|c\+\+|c#|go|rust|swift|kotlin|php|ruby|coding|software development|algorithm|data structure)/.test(
-                lower
-              )
-            )
-              derivedTags.push("Programming");
-            if (/(tech news|technology|trends|ai|industry)/.test(lower))
-              derivedTags.push("Tech News");
-            return {
-              id:
-                a.id?.toString?.() ||
-                a._id?.toString?.() ||
-                `${Date.now()}-${idx}`,
-              title,
-              excerpt: description,
-              content,
-              publishedAt,
-              readTime: `${minutes} min read`,
-              tags: derivedTags.length ? derivedTags : ["Tech News"],
-              image,
-            };
-          });
-          setFetchedPosts(mapped);
-          setLoading(false);
-          return;
-        }
-
-        // Final catch if no keys worked or were present
-        if (!newsApiKey && !apitubeKey && !polygonApiKey && !currentApiKey) {
-           throw new Error("No News API keys configured.");
         }
       } catch (err: any) {
         if (err.name !== "AbortError") {
-          let msg = err.message || "Failed to load news";
-          if (msg.includes("426")) {
-            msg = "NewsAPI restricted on production (Free tier). Falling back...";
-          }
-          setError(msg);
+          console.warn("[Blog] Fetch cycle finished with issues", err);
         }
       } finally {
         setLoading(false);
       }
+    };
+
+    // Helper to map different API responses to internal BlogPost type
+    const mapArticle = (a: any, idx: number, source: string): BlogPost => {
+      const title = a.title || a.headline || "Untitled";
+      const description = a.description || a.summary || a.excerpt || "";
+      const content = a.content || description;
+      const publishedAt = a.publishedAt || a.published_at || a.published_utc || a.date || new Date().toISOString();
+      const image = a.urlToImage || a.image_url || a.image || a.thumbnail;
+      
+      const words = (content || description).split(/\s+/).filter(Boolean).length;
+      const minutes = Math.max(1, Math.ceil(words / 200));
+      
+      const derivedTags: string[] = [];
+      const lower = (title + " " + description).toLowerCase();
+      if (/(react|vue|angular|css|frontend|ui|ux)/.test(lower)) derivedTags.push("Frontend");
+      if (/(node|docker|devops|server|database|backend)/.test(lower)) derivedTags.push("Backend");
+      if (/(cybersecurity|security|hacking|malware|data protection|privacy)/.test(lower)) derivedTags.push("Cybersecurity");
+      if (/(programming|javascript|typescript|es6|python|java|coding|software)/.test(lower)) derivedTags.push("Programming");
+      
+      return {
+        id: a.id?.toString() || a.url || `${source}-${idx}`,
+        title,
+        excerpt: description,
+        content,
+        publishedAt,
+        readTime: `${minutes} min read`,
+        tags: derivedTags.length ? derivedTags : [source],
+        image,
+      };
     };
 
     fetchNews();
