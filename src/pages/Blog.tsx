@@ -264,24 +264,18 @@ const Blog: React.FC = () => {
     }
   }, [selectedTag, searchTerm]);
 
+  const newsApiKey = import.meta.env.VITE_NEWSAPI_KEY as string | undefined;
+  const apitubeKey = import.meta.env.VITE_APITUBE_API_KEY as string | undefined;
+  const currentApiKey = import.meta.env.VITE_CURRENTAPI_KEY as string | undefined;
+  const polygonApiKey = import.meta.env.VITE_POLYGON_API_KEY as string | undefined;
+
   useEffect(() => {
     const controller = new AbortController();
+    
     const fetchNews = async () => {
       setLoading(true);
       setError(null);
       try {
-        const newsApiKey = import.meta.env.VITE_NEWSAPI_KEY as
-          | string
-          | undefined;
-        const apitubeKey = import.meta.env.VITE_APITUBE_API_KEY as
-          | string
-          | undefined;
-        const currentApiKey = import.meta.env.VITE_CURRENTAPI_KEY as
-          | string
-          | undefined;
-        const polygonApiKey = import.meta.env.VITE_POLYGON_API_KEY as
-          | string
-          | undefined;
 
         // Debug which keys are present (do NOT log actual keys)
         console.log("[Blog] API keys presence:", {
@@ -616,7 +610,7 @@ const Blog: React.FC = () => {
 
     fetchNews();
     return () => controller.abort();
-  }, [queryTerm, apitubeKey, currentApiKey, newsApiKey, polygonApiKey]);
+  }, [queryTerm]);
 
 
 
