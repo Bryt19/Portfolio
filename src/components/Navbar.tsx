@@ -37,13 +37,6 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Projects", path: "/projects" },
-    { name: "Blog", path: "/blog" },
-    { name: "Contact", path: "/contact" },
-  ];
 
   const dockItems = [
     { icon: <Home size={20} />, label: 'Home', path: '/' },
@@ -131,104 +124,67 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation - Staggered Menu */}
+        {/* Mobile Navigation - Floating Card Menu */}
         <AnimatePresence>
           {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -10 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="md:hidden bg-white dark:bg-dark-800 rounded-xl mt-2 shadow-2xl border border-dark-100 dark:border-dark-700 overflow-hidden backdrop-blur-xl"
-            >
+            <div className="md:hidden absolute top-16 right-4 w-56 pointer-events-auto">
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1, duration: 0.2 }}
-                className="px-3 py-3 space-y-1"
+                initial={{ opacity: 0, scale: 0.9, y: -20, filter: "blur(4px)" }}
+                animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, scale: 0.9, y: -20, filter: "blur(4px)" }}
+                transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
+                className="bg-white/90 dark:bg-dark-900/90 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-dark-100/50 dark:border-dark-800/50 overflow-hidden"
               >
-                {navItems.map((item, index) => (
-                  <motion.div
-                    key={item.name}
-                    initial={{ 
-                      opacity: 0, 
-                      x: -20, 
-                      scale: 0.9 
-                    }}
-                    animate={{ 
-                      opacity: 1, 
-                      x: 0, 
-                      scale: 1 
-                    }}
-                    exit={{ 
-                      opacity: 0, 
-                      x: -20, 
-                      scale: 0.9 
-                    }}
-                    transition={{ 
-                      duration: 0.3, 
-                      delay: index * 0.1,
-                      ease: "easeOut" 
-                    }}
-                    whileHover={{ 
-                      x: 5, 
-                      scale: 1.02,
-                      transition: { duration: 0.2 }
-                    }}
-                    whileTap={{ 
-                      scale: 0.98,
-                      transition: { duration: 0.1 }
-                    }}
-                  >
-                    <Link
-                      to={item.path}
-                      onClick={() => setIsOpen(false)}
-                      className={`block px-3 py-2 rounded-lg text-xs font-black tracking-widest uppercase transition-all duration-300 group ${
-                        location.pathname === item.path
-                          ? "bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 shadow-sm"
-                          : "text-dark-600 dark:text-dark-300 hover:bg-dark-50 dark:hover:bg-dark-700 hover:shadow-sm"
-                      }`}
+                <div className="p-2 space-y-1">
+                  {dockItems.map((item, index) => (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05 + 0.1 }}
                     >
-                      <motion.span
-                        className="flex items-center justify-between"
-                        whileHover={{ x: 2 }}
-                        transition={{ duration: 0.2 }}
+                      <Link
+                        to={item.path}
+                        onClick={() => setIsOpen(false)}
+                        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group ${
+                          location.pathname === item.path
+                            ? "bg-primary-500 text-white shadow-lg shadow-primary-500/20"
+                            : "text-dark-600 dark:text-dark-300 hover:bg-dark-50 dark:hover:bg-dark-800"
+                        }`}
                       >
-                        <span>{item.name}</span>
-                        <motion.div
-                          className={`w-2 h-2 rounded-full ${
-                            location.pathname === item.path
-                              ? "bg-primary-600 dark:bg-primary-400"
-                              : "bg-transparent group-hover:bg-dark-400 dark:group-hover:bg-dark-500"
-                          }`}
-                          animate={{
-                            scale: location.pathname === item.path ? [1, 1.2, 1] : 0,
-                            opacity: location.pathname === item.path ? 1 : 0
-                          }}
-                          transition={{ 
-                            duration: 0.3, 
-                            repeat: location.pathname === item.path ? Infinity : 0,
-                            repeatDelay: 2
-                          }}
-                        />
-                      </motion.span>
-                    </Link>
-                  </motion.div>
-                ))}
+                        <span className={`transition-colors duration-300 ${
+                          location.pathname === item.path ? "text-white" : "text-dark-400 dark:text-dark-500 group-hover:text-primary-500"
+                        }`}>
+                          {item.icon}
+                        </span>
+                        <span className="text-[11px] font-black uppercase tracking-[0.15em]">
+                          {item.label}
+                        </span>
+                        
+                        {location.pathname === item.path && (
+                          <motion.div 
+                            layoutId="activeIndicator"
+                            className="ml-auto w-1 h-4 bg-white/40 rounded-full"
+                          />
+                        )}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
                 
-                {/* Menu Footer */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: navItems.length * 0.1 + 0.2, duration: 0.3 }}
-                  className="pt-3 mt-3 border-t border-dark-100 dark:border-dark-700"
-                >
-                  <div className="text-xs text-dark-500 dark:text-dark-400 text-center">
-                    Navigation Menu
+                {/* Minimal Footer */}
+                <div className="px-5 py-3 bg-dark-50/50 dark:bg-dark-800/50 border-t border-dark-100/30 dark:border-dark-700/30">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-bold text-dark-400 dark:text-dark-500 uppercase tracking-widest">Navigation</span>
+                    <div className="flex gap-1">
+                      <div className="w-1 h-1 rounded-full bg-primary-500/30" />
+                      <div className="w-1 h-1 rounded-full bg-primary-500/50" />
+                      <div className="w-1 h-1 rounded-full bg-primary-500" />
+                    </div>
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
-            </motion.div>
+            </div>
           )}
         </AnimatePresence>
       </div>
