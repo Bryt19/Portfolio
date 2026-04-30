@@ -8,6 +8,8 @@ export interface Project {
   githubUrl?: string;
   liveUrl?: string;
   featured?: boolean;
+  collaborators?: string[];
+  year?: string;
 }
 
 export interface BlogPost {

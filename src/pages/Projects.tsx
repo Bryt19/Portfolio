@@ -4,6 +4,7 @@ import {
   ExternalLink,
   Search,
   X,
+  Users,
 } from "lucide-react";
 import Button from "../components/Button";
 import { Project } from "../types";
@@ -58,6 +59,7 @@ const Projects: React.FC = () => {
       githubUrl: "https://github.com/Bryt19/MoneyGrid",
       liveUrl: "https://moneygrid.vercel.app",
       featured: false,
+      year: "2026",
     },
     {
       id: "4",
@@ -177,16 +179,48 @@ const Projects: React.FC = () => {
     },
     {
       id: "12",
-      title: "Pixel Paradise",
+      title: "Klavora",
       description:
-        "Beautiful image gallery website showcasing curated collections of digital artwork.",
+        "Pharmacy inventory management dashboard with real-time stock tracking and analytics.",
       longDescription:
-        "Developed an elegant image gallery website featuring curated collections of digital artwork and photography. Features responsive grid layout, image zoom functionality, and smooth browsing experience.",
-      image: "/img/gallery.png",
-      technologies: ["Bootstrap", "JavaScript", "CSS3", "HTML5"],
-      githubUrl: "https://github.com/Bryt19/Code_Alpha_Image-Gallery",
-      liveUrl: "https://bryt19.github.io/Code_Alpha_Image-Gallery/",
+        "Collaboratively built a full-featured pharmacy management dashboard with inventory tracking, sales analytics, restocking management, and category organization. Features a modern dark-themed UI with Tailwind CSS and real-time data visualization.",
+      image: "/img/klavora.png",
+      technologies: ["React", "TypeScript", "Tailwind CSS", "Next.js"],
+      githubUrl: "https://github.com/richkid2xi/Klavora/tree/develop",
+      liveUrl: "https://klavora.vercel.app/",
       featured: false,
+      collaborators: ["Team Project"],
+      year: "2026",
+    },
+    {
+      id: "13",
+      title: "PulseAid",
+      description:
+        "Health emergency response platform with real-time alerts, first-aid guides, and location sharing.",
+      longDescription:
+        "Co-developed a health-focused emergency response platform featuring real-time SOS alerts, interactive first-aid guides, nearby hospital locator, and live location sharing with emergency contacts. Built with a mobile-first approach and accessibility in mind.",
+      image: "/img/PulseAid.png",
+      technologies: ["React", "TypeScript", "Tailwind CSS", "API Integration"],
+      githubUrl: "https://github.com/richkid2xi/PulseAid",
+      liveUrl: "https://pulseaid.vercel.app/",
+      featured: false,
+      collaborators: ["Team Project"],
+      year: "2026",
+    },
+    {
+      id: "14",
+      title: "TLGM SMS",
+      description:
+        "Bulk SMS messaging platform with contact management, campaign scheduling, and delivery analytics.",
+      longDescription:
+        "Collaboratively built a robust SMS communication platform featuring bulk message sending, contact list management, campaign scheduling, delivery tracking, and real-time analytics. Designed for businesses to streamline their SMS marketing and notification workflows.",
+      image: "/img/TGLM.png",
+      technologies: ["React", "Node.js", "PostgreSQL", "TypeScript", "Tailwind CSS"],
+      githubUrl: "https://github.com/Bryt19/TLGM-SMS",
+      liveUrl: "https://tlgm-sms.vercel.app/",
+      featured: false,
+      collaborators: ["Team Project"],
+      year: "2026",
     },
   ];
 
@@ -330,13 +364,19 @@ const Projects: React.FC = () => {
                     alt={project.title}
                     className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                   />
-                  {project.featured && (
-                    <div className="absolute top-6 left-6">
+                  <div className="absolute top-6 left-6 flex gap-2">
+                    {project.featured && (
                       <span className="px-4 py-1 bg-primary-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full">
                         Featured
                       </span>
-                    </div>
-                  )}
+                    )}
+                    {project.collaborators && project.collaborators.length > 0 && (
+                      <span className="px-4 py-1 bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full flex items-center gap-1.5">
+                        <Users className="w-3 h-3" />
+                        Collab
+                      </span>
+                    )}
+                  </div>
                 </div>
                 
                 <div className="space-y-4">
@@ -426,8 +466,22 @@ const Projects: React.FC = () => {
                     <h4 className="text-sm font-black uppercase tracking-widest text-primary-500 mb-6">Client / Category</h4>
                     <p className="text-2xl font-bold mb-12">Universal Case Study</p>
                     
+                    {selectedProject.collaborators && selectedProject.collaborators.length > 0 && (
+                      <>
+                        <h4 className="text-sm font-black uppercase tracking-widest text-primary-500 mb-6">Collaborators</h4>
+                        <div className="flex flex-wrap gap-2 mb-12">
+                          {selectedProject.collaborators.map((collab) => (
+                            <span key={collab} className="px-4 py-2 bg-emerald-500/10 text-emerald-500 text-sm font-black uppercase tracking-widest rounded-full flex items-center gap-2">
+                              <Users className="w-3.5 h-3.5" />
+                              {collab}
+                            </span>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                    
                     <h4 className="text-sm font-black uppercase tracking-widest text-primary-500 mb-6">Year</h4>
-                    <p className="text-2xl font-bold">2025</p>
+                    <p className="text-2xl font-bold">{selectedProject.year || "2025"}</p>
                   </div>
                 </div>
               </div>
