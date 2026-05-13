@@ -180,7 +180,7 @@ const Home: React.FC = () => {
                 onClick={() => window.location.href = project.link}
               >
                 <div className="relative aspect-video rounded-[1.5rem] overflow-hidden bg-dark-100 dark:bg-dark-900 mx-auto w-full max-w-[500px]">
-                  <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 group-hover:-rotate-1 transition-all duration-700 opacity-90 group-hover:opacity-100" />
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 group-hover:-rotate-1 transition-all duration-700 opacity-90 group-hover:opacity-100" loading="lazy" />
                 </div>
                 <div className="md:px-4">
                   <div className="flex gap-4 mb-4">

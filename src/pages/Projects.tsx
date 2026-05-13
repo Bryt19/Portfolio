@@ -296,9 +296,9 @@ const Projects: React.FC = () => {
       <section className="pt-40 pb-20 border-b border-dark-100 dark:border-dark-800">
         <div className="container-custom">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="max-w-5xl"
           >
             <h1 className="text-7xl md:text-9xl font-black text-dark-900 dark:text-white leading-none tracking-tighter mb-12">
@@ -363,6 +363,7 @@ const Projects: React.FC = () => {
                     src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                    loading="lazy"
                   />
                   <div className="absolute top-6 left-6 flex gap-2">
                     {project.featured && (

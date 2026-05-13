@@ -52,7 +52,7 @@ export const MinimalistHero = ({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="z-20 order-2 md:order-1 text-center md:text-left md:pr-4"
         >
           <p className="mx-auto max-w-md text-xl md:text-1xl font-light leading-relaxed text-foreground/80 md:mx-0">{mainText}</p>
@@ -72,10 +72,11 @@ export const MinimalistHero = ({
             <motion.img
                 src={imageSrc}
                 alt={imageAlt}
-                className="relative z-10 h-auto w-64 object-cover md:w-80 lg:w-[520px] scale-110"
+                className="relative z-10 h-auto w-64 object-cover md:w-95 lg:w-[550px] scale-115"
+                fetchPriority="high"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.onerror = null;
@@ -88,8 +89,8 @@ export const MinimalistHero = ({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-          className="z-20 order-3 flex items-center justify-center text-center md:justify-start"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="z-20 order-3 flex items-center justify-center text-center md:justify-start md:pl-8"
         >
           <h1 className="text-8xl font-extrabold text-foreground md:text-8xl lg:text-9xl">
             {overlayText.part1}
