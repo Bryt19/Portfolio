@@ -42,7 +42,7 @@ const Home: React.FC = () => {
       <MinimalistHero
         mainText="I'm Bright Akoto, a developer focused on blending modern performance with a warm, intuitive user experience. Delivering digital products that feel as good as they work."
         readMoreLink="/about"
-        imageSrc="/img/profile2.png"
+        imageSrc="/img/11.png"
         imageAlt="Bright Akoto - Profile"
         overlayText={{
           part1: 'less is',

@@ -140,15 +140,15 @@ const Projects: React.FC = () => {
     },
     {
       id: "9",
-      title: "Book Club Website",
+      title: "Mawuli Woodworks",
       description:
-        "Community platform for book lovers with reading lists and discussion forums.",
+        "Premium custom woodwork and artisanal furniture craftsmanship showcase.",
       longDescription:
-        "Developed a book club platform with reading lists, book reviews, discussion forums, and user profiles. Features community engagement and social interaction.",
-      image: "/img/book.png",
-      technologies: ["Local Storage", "JavaScript", "CSS3", "HTML5"],
-      githubUrl: "https://github.com/Bryt19/book-club-hub",
-      liveUrl: "https://book-club-hub.vercel.app/",
+        "A bespoke furniture and woodwork website showcasing artisanal craftsmanship, custom designs, and premium wood products. Designed for elegance and professional presentation of high-end carpentry.",
+      image: "/img/work.png",
+      technologies: ["React", "Tailwind CSS", "Framer Motion", "TypeScript","PostgreSQL"],
+      githubUrl: "https://github.com/Bryt19/mawuli-woodworks",
+      liveUrl: "https://mawuliwoodworks.shop/",
       featured: false,
     },
     {

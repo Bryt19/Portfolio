@@ -249,7 +249,7 @@ const About: React.FC = () => {
               className="relative aspect-square rounded-[1rem] overflow-hidden bg-dark-50 dark:bg-dark-900 border border-dark-100 dark:border-dark-800"
             >
               <img
-                src="/img/work .jpeg"
+                src="/img/333.png"
                 alt="Bright Akoto"
                 className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700"
               />
