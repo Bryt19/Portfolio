@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 // Define the props interface for type safety and reusability
 interface MinimalistHeroProps {
-  mainText: string;
+  mainText: string | React.ReactNode;
   readMoreLink: string;
   imageSrc: string;
   imageAlt: string;
