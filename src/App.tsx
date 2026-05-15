@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -35,6 +36,7 @@ function AppContent() {
         </main>
         <Footer />
         <ScrollToTop />
+        <Analytics />
     </div>
   );
 }

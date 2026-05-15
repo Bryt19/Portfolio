@@ -178,9 +178,9 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 If you have any questions or need help, feel free to reach out:
 
-- Email: contact@example.com
-- LinkedIn: [Your LinkedIn Profile]
-- GitHub: [Your GitHub Profile]
+- Email: Ac.bryt19@gmail.com
+- LinkedIn:https://www.linkedin.com/in/bright-akoto19/
+- GitHub: https://github.com/Bryt19
 
 ---
 
