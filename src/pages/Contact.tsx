@@ -130,9 +130,9 @@ const Contact: React.FC = () => {
           <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <MessageCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
           </div>
-          <h1 className="text-3xl font-bold text-dark-900 dark:text-white mb-4">
+          <h2 className="text-3xl font-bold text-dark-900 dark:text-white mb-4">
             Message Sent!
-          </h1>
+          </h2>
           <p className="text-dark-600 dark:text-dark-300 mb-8">
             Thank you for reaching out. I'll get back to you as soon as
             possible.

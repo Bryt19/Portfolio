@@ -40,6 +40,7 @@ const Home: React.FC = () => {
     <div className="min-h-screen bg-white dark:bg-dark-950">
       {/* Hero Section */}
       <MinimalistHero
+        titleH1="Bright Akoto | Frontend Developer & Software Engineer"
         mainText={<>I'm <span className="font-bold text-dark-900 dark:text-white">Bright Akoto</span>, a developer focused on blending modern performance with a warm, intuitive user experience. Delivering digital products that feel as good as they work.</>}
         readMoreLink="/about"
         imageSrc="/img/11.png"

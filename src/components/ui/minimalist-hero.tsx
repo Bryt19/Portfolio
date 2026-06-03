@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 
 // Define the props interface for type safety and reusability
 interface MinimalistHeroProps {
+  titleH1?: string;
   mainText: string | React.ReactNode;
   readMoreLink: string;
   imageSrc: string;
@@ -28,6 +29,7 @@ const SocialIcon = ({ href, icon: Icon }: { href: string; icon: LucideIcon }) =>
 
 // The main reusable Hero Section component
 export const MinimalistHero = ({
+  titleH1,
   mainText,
   readMoreLink,
   imageSrc,
@@ -44,6 +46,7 @@ export const MinimalistHero = ({
         className
       )}
     >
+      {titleH1 && <h1 className="sr-only">{titleH1}</h1>}
 
 
       {/* Main Content Area */}
@@ -92,11 +95,11 @@ export const MinimalistHero = ({
           transition={{ duration: 0.6, delay: 0.3 }}
           className="z-20 order-3 flex items-center justify-center text-center md:justify-start md:pl-8"
         >
-          <h1 className="text-8xl font-extrabold text-foreground md:text-8xl lg:text-9xl">
+          <h2 className="text-8xl font-extrabold text-foreground md:text-8xl lg:text-9xl">
             {overlayText.part1}
             <br />
             {overlayText.part2}
-          </h1>
+          </h2>
         </motion.div>
       </div>
 
