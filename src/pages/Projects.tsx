@@ -22,7 +22,7 @@ const Projects: React.FC = () => {
         "A comprehensive trading platform with real-time market data and portfolio management.",
       longDescription:
         "Built a full-featured trading application with real-time market data, portfolio tracking, and trading simulation. Features responsive design and intuitive user interface.",
-      image: "/img/TradeLens.png",
+      image: "/img/TradeLens.webp",
       technologies: [
         "React",
         "Typescript",
@@ -41,7 +41,7 @@ const Projects: React.FC = () => {
         "Innovative platform for learning and skill development with interactive content.",
       longDescription:
         "Developed a learning platform with interactive modules, progress tracking, and user engagement features. Built with modern web technologies for optimal performance.",
-      image: "/img/LeapBod.png",
+      image: "/img/LeapBod.webp",
       technologies: ["React", "Node.js", "PostgreSQL", "Typescript", "HTML5"],
       githubUrl: "https://github.com/Bryt19/Leapbod",
       liveUrl: "https://leapbod.vercel.app/",
@@ -54,7 +54,7 @@ const Projects: React.FC = () => {
         "A modern, full-featured personal finance web app for tracking income, expenses, budgets, and savings goals.",
       longDescription:
         "A modern, full-featured personal finance web app for tracking income, expenses, budgets, and savings goals. Built with React, TypeScript, and Supabase.",
-      image: "/img/MoneyGrid.png",
+      image: "/img/MoneyGrid.webp",
       technologies: ["React", "Node.js", "PostgreSQL", "TypeScript", "Tailwind CSS", "Supabase", "HTML5"],
       githubUrl: "https://github.com/Bryt19/MoneyGrid",
       liveUrl: "https://moneygrid.vercel.app",
@@ -68,7 +68,7 @@ const Projects: React.FC = () => {
         "Professional resume builder with customizable templates and PDF export.",
       longDescription:
         "Built a user-friendly resume builder with multiple templates, real-time preview, and PDF export functionality. Helps users create professional resumes quickly.",
-      image: "/img/resume.png",
+      image: "/img/resume.webp",
       technologies: ["Node.js", "MongoDB", "Local Storage", "CSS3", "HTML5"],
       githubUrl: "https://github.com/Bryt19/ProFileBuilder",
       liveUrl: "https://pro-file-builder.vercel.app/",
@@ -81,7 +81,7 @@ const Projects: React.FC = () => {
         "Car rental website with booking system, vehicle selection, and reservation management.",
       longDescription:
         "Developed a comprehensive car rental platform with vehicle browsing, booking functionality, reservation management, and payment processing. Features responsive design and intuitive user experience.",
-      image: "/img/Zoom.png",
+      image: "/img/Zoom.webp",
       technologies: [
         "Bootstrap",
         "Local Storage",
@@ -100,7 +100,7 @@ const Projects: React.FC = () => {
         "Real-time weather application with location-based forecasts and clean design.",
       longDescription:
         "Created a weather application with current conditions, forecasts, and location search. Features responsive design and intuitive user interface.",
-      image: "/img/weather.png",
+      image: "/img/weather.webp",
       technologies: ["HTML5", "JavaScript", "CSS3", "Tailwind CSS"],
       githubUrl: "https://github.com/Bryt19/Weather",
       liveUrl: "https://bryt19.github.io/Weather/",
@@ -113,7 +113,7 @@ const Projects: React.FC = () => {
         "Climate-smart farming platform empowering Ghana's smallholder farmers with data-driven agricultural insights.",
       longDescription:
         "Verdis is a climate-smart farming platform built to empower Ghana's smallholder farmers with real-time weather data, crop advisory tools, and market price insights. The platform bridges the gap between modern agri-tech and rural farming communities, providing actionable intelligence to improve yield, reduce climate risk, and increase income resilience.",
-      image: "/img/verdis.png",
+      image: "/img/verdis.webp",
       technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "Prisma", "Shadcn UI", "Framer Motion", "Supabase", "Railway", "Local Storage"],
       githubUrl: "https://github.com/Bryt19/Verdis",
       liveUrl: "https://verdis-farm.vercel.app/",
@@ -128,7 +128,7 @@ const Projects: React.FC = () => {
         "Modern guest feedback platform landing page designed specifically for hotels and resorts.",
       longDescription:
         "Revanta is a modern, responsive landing page for a guest feedback platform designed specifically for hotels and resorts. It enables hospitality businesses to collect, manage, and act on guest reviews in real time — helping elevate service quality and strengthen online reputation through elegant, intuitive design.",
-      image: "/img/revanta.png",
+      image: "/img/revanta.webp",
       technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Shadcn UI"],
       githubUrl: "https://github.com/Bryt19/Revanta",
       liveUrl: "https://revanta-sigma.vercel.app/",
@@ -143,7 +143,7 @@ const Projects: React.FC = () => {
         "Premium custom woodwork and artisanal furniture craftsmanship showcase.",
       longDescription:
         "A bespoke furniture and woodwork website showcasing artisanal craftsmanship, custom designs, and premium wood products. Designed for elegance and professional presentation of high-end carpentry.",
-      image: "/img/work.png",
+      image: "/img/work.webp",
       technologies: ["React", "Tailwind CSS", "Framer Motion", "TypeScript","PostgreSQL"],
       githubUrl: "https://github.com/Bryt19/mawuli-woodworks",
       liveUrl: "https://mawuliwoodworks.shop/",
@@ -156,7 +156,7 @@ const Projects: React.FC = () => {
         "Interactive typing tutor with lessons, practice modes, and progress tracking (Still Developing).",
       longDescription:
         "Currently developing a comprehensive typing learning platform with interactive lessons, typing tests, progress tracking, and gamification elements to make learning fun.",
-      image: "/img/typing.png",
+      image: "/img/typing.webp",
       technologies: ["React", "Node.js", "PostgreSQL", "JavaScript", "HTML5"],
       githubUrl: "https://github.com/Bryt19",
       liveUrl: "https://example.com",
@@ -169,7 +169,7 @@ const Projects: React.FC = () => {
         "TikTok video downloader that saves videos without watermarks for personal use.",
       longDescription:
         "Built a TikTok video downloader application that allows users to download TikTok videos without watermarks. Features clean interface, fast download speeds, API integration, and supports various video qualities.",
-      image: "/img/save.png",
+      image: "/img/save.webp",
       technologies: ["HTML5", "CSS3", "JavaScript", "API Integration"],
       githubUrl: "https://github.com/Bryt19/TikiSave",
       liveUrl: "https://tiki-save.vercel.app/",
@@ -182,7 +182,7 @@ const Projects: React.FC = () => {
         "Pharmacy inventory management dashboard with real-time stock tracking and analytics.",
       longDescription:
         "Collaboratively built a full-featured pharmacy management dashboard with inventory tracking, sales analytics, restocking management, and category organization. Features a modern dark-themed UI with Tailwind CSS and real-time data visualization.",
-      image: "/img/klavora.png",
+      image: "/img/klavora.webp",
       technologies: ["React", "TypeScript", "Tailwind CSS", "Next.js", "PostgreSQL","Supabase", "Node.js", "Prisma","Vercel","Railway", "Local Storage","HTML5"],
       githubUrl: "https://github.com/richkid2xi/Klavora/tree/develop",
       liveUrl: "https://klavora.vercel.app/",
@@ -197,7 +197,7 @@ const Projects: React.FC = () => {
         "Smart restaurant management system streamlining orders, inventory, staff, and customer experience.",
       longDescription:
         "Platera is a smart restaurant management system co-developed to help restaurants streamline their operations end-to-end. It features real-time order management, table reservations, inventory tracking, staff scheduling, and customer feedback integration — all wrapped in a sleek, intuitive dashboard built for the modern hospitality industry.",
-      image: "/img/Platera.png",
+      image: "/img/Platera.webp",
       technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL","Supabase", "Railway", "Local Storage", "HTML5", "Vercel"],
       githubUrl: "https://github.com/Bryt19/Platera",
       liveUrl: "https://platera.vercel.app/",
@@ -212,7 +212,7 @@ const Projects: React.FC = () => {
         "Bulk SMS messaging platform with contact management, campaign scheduling, and delivery analytics.",
       longDescription:
         "Collaboratively built a robust SMS communication platform featuring bulk message sending, contact list management, campaign scheduling, delivery tracking, and real-time analytics. Designed for businesses to streamline their SMS marketing and notification workflows.",
-      image: "/img/TGLM.png",
+      image: "/img/TGLM.webp",
       technologies: ["React", "Node.js", "PostgreSQL", "TypeScript", "Tailwind CSS"],
       githubUrl: "https://github.com/Bryt19/TLGM-SMS",
       liveUrl: "https://tlgm-sms.vercel.app/",

@@ -9,6 +9,8 @@ interface MinimalistHeroProps {
   readMoreLink: string;
   imageSrc: string;
   imageAlt: string;
+  imageWidth?: number;
+  imageHeight?: number;
   overlayText: {
     part1: string;
     part2: string;
@@ -34,6 +36,8 @@ export const MinimalistHero = ({
   readMoreLink,
   imageSrc,
   imageAlt,
+  imageWidth = 1024,
+  imageHeight = 1536,
   overlayText,
   socialLinks = [],
   locationText,
@@ -58,7 +62,7 @@ export const MinimalistHero = ({
           transition={{ duration: 0.6, delay: 0.4 }}
           className="z-20 order-2 md:order-1 text-center md:text-left md:pr-4"
         >
-          <p className="mx-auto max-w-md text-xl md:text-1xl font-light leading-relaxed text-foreground/80 md:mx-0">{mainText}</p>
+          <p className="mx-auto max-w-md text-xl font-light leading-relaxed text-foreground/80 md:mx-0">{mainText}</p>
           <a href={readMoreLink} className="mt-5 inline-block text-lg font-bold tracking-widest uppercase text-foreground underline decoration-from-font underline-offset-8 hover:text-primary-500 transition-colors duration-300">
             Read More
           </a>
@@ -75,7 +79,9 @@ export const MinimalistHero = ({
             <motion.img
                 src={imageSrc}
                 alt={imageAlt}
-                className="relative z-10 h-auto w-64 object-cover md:w-95 lg:w-[550px] scale-115"
+                className="relative z-10 h-auto w-64 object-cover md:w-[380px] lg:w-[550px] scale-110"
+                width={imageWidth}
+                height={imageHeight}
                 fetchPriority="high"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}

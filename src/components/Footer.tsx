@@ -4,7 +4,7 @@ const Footer: React.FC = () => {
   const socialLinks = [
     { name: "GitHub", url: "https://github.com/Bryt19" },
     { name: "LinkedIn", url: "https://www.linkedin.com/in/bright-akoto19" },
-    { name: "Twitter", url: "https://x.com/airxqhobarbryt" },
+    { name: "Twitter", url: "https://x.com/dhollarsign_dev" },
     { name: "Email", url: "mailto:Ac.bryt19@gmail.com" },
     { name: "Instagram", url: "https://www.instagram.com/jiggy_soul/" },
   ];

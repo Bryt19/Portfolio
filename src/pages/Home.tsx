@@ -43,7 +43,9 @@ const Home: React.FC = () => {
         titleH1="Bright Akoto | Frontend Developer & Software Engineer"
         mainText={<>I'm <span className="font-bold text-dark-900 dark:text-white">Bright Akoto</span>, a developer focused on blending modern performance with a warm, intuitive user experience. Delivering digital products that feel as good as they work.</>}
         readMoreLink="/about"
-        imageSrc="/img/11.png"
+        imageSrc="/img/11.webp"
+        imageWidth={1024}
+        imageHeight={1536}
         imageAlt="Bright Akoto - Profile"
         overlayText={{
           part1: 'less is',
@@ -159,14 +161,14 @@ const Home: React.FC = () => {
               {
                 title: "TradeLens",
                 description: "Real-time trading analytics platform.",
-                image: "/img/TradeLens.png",
+                image: "/img/TradeLens.webp",
                 tags: ["Analytics", "Fintech"],
                 link: "/projects"
               },
               {
                 title: "LeapBod",
                 description: "Real-time event & opportunity platform.",
-                image: "/img/LeapBod.png",
+                image: "/img/LeapBod.webp",
                 tags: ["Networking", "SaaS"],
                 link: "/projects"
               }

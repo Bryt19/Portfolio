@@ -2,6 +2,7 @@ import React from "react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Button from "../components/Button";
+import HackathonAchievement from "../components/HackathonAchievement";
 
 /* ─── Animation Variants ─────────────────────────────────────────── */
 const fadeUp = {
@@ -249,7 +250,7 @@ const About: React.FC = () => {
               className="relative aspect-square rounded-[1rem] overflow-hidden bg-dark-50 dark:bg-dark-900 border border-dark-100 dark:border-dark-800"
             >
               <img
-                src="/img/333.png"
+                src="/img/333.webp"
                 alt="Bright Akoto"
                 className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700"
               />
@@ -474,6 +475,9 @@ const About: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* ── Hackathon Achievement ── */}
+      <HackathonAchievement />
 
       {/* ── CTA Strip ── */}
       <motion.section
