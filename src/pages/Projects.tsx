@@ -151,16 +151,17 @@ const Projects: React.FC = () => {
     },
     {
       id: "10",
-      title: "Typing Learning Website",
+      title: "Lumina Support",
       description:
-        "Interactive typing tutor with lessons, practice modes, and progress tracking (Still Developing).",
+        "Customer support platform with ticketing, live chat, and a knowledge base.",
       longDescription:
-        "Currently developing a comprehensive typing learning platform with interactive lessons, typing tests, progress tracking, and gamification elements to make learning fun.",
-      image: "/img/typing.webp",
-      technologies: ["React", "Node.js", "PostgreSQL", "JavaScript", "HTML5"],
-      githubUrl: "https://github.com/Bryt19",
-      liveUrl: "https://example.com",
+        "Lumina Support is a customer support platform with ticketing, live chat, and a knowledge base, helping teams resolve customer issues quickly and keep everyone in the loop.",
+      image: "/img/lumina.webp",
+      technologies: ["Angular", "TypeScript", "Node.js", "Express", "SQLite", "AI Agent"],
+      githubUrl: "https://github.com/Bryt19/Lumina",
+      liveUrl: "https://lumina-help.vercel.app/",
       featured: false,
+      year: "2026",
     },
     {
       id: "11",
@@ -238,6 +239,7 @@ const Projects: React.FC = () => {
             [
               "React",
               "Vue.js",
+              "Angular",
               "TypeScript",
               "Tailwind CSS",
               "Framer Motion",

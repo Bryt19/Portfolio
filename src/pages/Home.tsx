@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { motion, useMotionValue, useTransform, animate, useInView } from "framer-motion";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, ExternalLink } from "lucide-react";
 import Button from "../components/Button";
+import GitHubSection from "../components/GitHubSection";
 import { MinimalistHero } from "../components/ui/minimalist-hero";
 
 const AnimatedCounter = ({ from, to, suffixClassName = "", suffix = "" }: { from: number, to: number, suffixClassName?: string, suffix?: string }) => {
@@ -57,7 +58,7 @@ const Home: React.FC = () => {
       {/* Quick Stats Section */}
       <section className="py-20 border-y-2 border-dark-200 dark:border-dark-700">
         <div className="container-custom">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center md:text-left">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center md:text-left">
             {[
               { number: 30, suffix: "+", label: "Projects Completed" },
               { number: 3, suffix: "+", label: "Years Experience" },
@@ -143,17 +144,91 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* How I Build */}
+      <section className="section-padding border-b-2 border-dark-200 dark:border-dark-700">
+        <div className="container-custom">
+          <div className="max-w-3xl mb-20">
+            <h2 className="text-xs uppercase tracking-[0.3em] text-primary-600 dark:text-primary-400 font-bold mb-4">
+              The Process
+            </h2>
+            <h3 className="text-4xl md:text-6xl font-black text-dark-900 dark:text-white leading-none tracking-tighter mb-8">
+              How I <span className="text-dark-400 dark:text-dark-600">build.</span>
+            </h3>
+            <p className="text-dark-600 dark:text-dark-400 text-lg font-light leading-relaxed max-w-xl">
+              A calm, deliberate process — understand the problem before
+              touching the code, and keep iterating after it ships.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-10 gap-y-20">
+            {[
+              {
+                title: "Understand",
+                description: "Understand the problem and users.",
+              },
+              {
+                title: "Design",
+                description: "Create the interface and technical architecture.",
+              },
+              {
+                title: "Build",
+                description: "Develop the application with a modern stack.",
+              },
+              {
+                title: "Test",
+                description: "Test functionality, responsiveness and edge cases.",
+              },
+              {
+                title: "Deploy",
+                description: "Ship to production and iterate.",
+              },
+            ].map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.08 }}
+                viewport={{ once: true }}
+                className="group relative border-t-2 border-dark-200 dark:border-dark-700 pt-14"
+              >
+                <span className="absolute -top-6 left-0 text-5xl md:text-6xl font-black leading-none text-dark-100 dark:text-dark-800 group-hover:text-primary-500 transition-colors duration-300 tabular-nums">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h4 className="text-2xl md:text-3xl font-black text-dark-900 dark:text-white mb-3 group-hover:text-primary-500 transition-colors duration-300">
+                  {step.title}
+                </h4>
+                <p className="text-dark-500 dark:text-dark-400 text-lg font-light leading-relaxed">
+                  {step.description}
+                </p>
+                {index < 4 && (
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                    className="hidden lg:block absolute -right-7 top-[-12px] text-dark-300 dark:text-dark-600 group-hover:text-primary-500 transition-colors duration-300"
+                  >
+                    <motion.span
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+                      className="block"
+                    >
+                      <ArrowRight className="w-6 h-6" />
+                    </motion.span>
+                  </motion.span>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Featured Projects */}
       <section className="section-padding bg-dark-50 dark:bg-dark-950/80 border-b-2 border-dark-200 dark:border-dark-700">
         <div className="container-custom">
-          <div className="flex flex-col md:flex-row md:items-center justify-between mb-20 gap-6">
-            <div className="max-w-2xl">
-              <h2 className="text-xs uppercase tracking-[0.3em] text-primary-600 dark:text-primary-400 font-bold mb-4">Works</h2>
-              <h3 className="text-4xl md:text-6xl font-black text-dark-900 dark:text-white tracking-tighter">Selected Projects.</h3>
-            </div>
-            <Button variant="outline" href="/projects" className="border-dark-900 dark:border-white text-dark-900 dark:text-white hover:bg-dark-900 dark:hover:bg-white hover:text-white dark:hover:text-dark-900 self-start md:self-center">
-              View All Works
-            </Button>
+          <div className="max-w-2xl mb-20">
+            <h2 className="text-xs uppercase tracking-[0.3em] text-primary-600 dark:text-primary-400 font-bold mb-4">Works</h2>
+            <h3 className="text-4xl md:text-6xl font-black text-dark-900 dark:text-white tracking-tighter">Selected Projects.</h3>
           </div>
 
           <div className="grid grid-cols-1 gap-32">
@@ -163,6 +238,10 @@ const Home: React.FC = () => {
                 description: "Real-time trading analytics platform.",
                 image: "/img/TradeLens.webp",
                 tags: ["Analytics", "Fintech"],
+                technologies: ["React", "TypeScript", "PostgreSQL", "Tailwind CSS"],
+                year: "2025",
+                liveUrl: "https://trade-lens-finance.vercel.app/",
+                githubUrl: "https://github.com/Bryt19/TradeLens",
                 link: "/projects"
               },
               {
@@ -170,6 +249,21 @@ const Home: React.FC = () => {
                 description: "Real-time event & opportunity platform.",
                 image: "/img/LeapBod.webp",
                 tags: ["Networking", "SaaS"],
+                technologies: ["React", "Node.js", "PostgreSQL", "TypeScript"],
+                year: "2025",
+                liveUrl: "https://leapbod.vercel.app/",
+                githubUrl: "https://github.com/Bryt19/Leapbod",
+                link: "/projects"
+              },
+              {
+                title: "Lumina Support",
+                description: "Customer support platform with ticketing, live chat, and a knowledge base.",
+                image: "/img/lumina.webp",
+                tags: ["Support", "SaaS"],
+                technologies: ["Angular", "TypeScript", "Node.js", "SQLite", "AI Agent"],
+                year: "2026",
+                liveUrl: "https://lumina-help.vercel.app/",
+                githubUrl: "https://github.com/Bryt19/Lumina",
                 link: "/projects"
               }
             ].map((project, index) => (
@@ -186,22 +280,65 @@ const Home: React.FC = () => {
                   <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 group-hover:-rotate-1 transition-all duration-700 opacity-90 group-hover:opacity-100" loading="lazy" />
                 </div>
                 <div className="md:px-4">
-                  <div className="flex gap-4 mb-4">
+                  <div className="flex flex-wrap items-center gap-4 mb-4">
                     {project.tags.map(tag => (
                       <span key={tag} className="text-[10px] uppercase tracking-[0.2em] font-black text-primary-500">{tag}</span>
                     ))}
+                    {project.year && (
+                      <span className="text-[10px] uppercase tracking-[0.2em] font-black text-dark-400 dark:text-dark-600">{project.year}</span>
+                    )}
                   </div>
                   <h4 className="text-4xl md:text-5xl font-black mb-4 text-dark-900 dark:text-white group-hover:translate-x-4 transition-transform duration-500">{project.title}</h4>
                   <p className="text-dark-500 dark:text-dark-400 text-lg font-light mb-6 max-w-md">
                     {project.description}
                   </p>
-                  <ArrowRight className="w-6 h-6 text-dark-900 dark:text-white group-hover:translate-x-4 transition-transform duration-300" />
+                  <div className="flex flex-wrap gap-3 mb-8">
+                    {project.technologies.map(tech => (
+                      <span key={tech} className="px-3.5 py-1.5 bg-white dark:bg-dark-800 border border-dark-200 dark:border-dark-700 text-[10px] font-black uppercase tracking-[0.2em] text-dark-600 dark:text-dark-300 rounded-full">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-6">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-primary-500 hover:text-primary-600 transition-colors"
+                      >
+                        Live Preview <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-dark-900 dark:text-white hover:text-primary-500 transition-colors"
+                      >
+                        View Code <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+                    <ArrowRight className="w-6 h-6 text-dark-900 dark:text-white group-hover:translate-x-4 transition-transform duration-300" />
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
+
+          <div className="mt-20 flex justify-center">
+            <Button variant="outline" href="/projects" className="border-dark-900 dark:border-white text-dark-900 dark:text-white hover:bg-dark-900 dark:hover:bg-white hover:text-white dark:hover:text-dark-900">
+              View All Works
+            </Button>
+          </div>
         </div>
       </section>
+
+      {/* GitHub */}
+      <GitHubSection />
 
       {/* Call to Action */}
       <section className="section-padding">
@@ -212,11 +349,23 @@ const Home: React.FC = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-7xl font-black mb-10 leading-tight tracking-tighter text-dark-900 dark:text-white">
+            <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-green-500/30 bg-green-500/10 mb-10">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+              </span>
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-green-600 dark:text-green-400">
+                Available for new projects
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-dark-900 dark:text-white">
               Let's create <br />
               <span className="text-primary-500 hover:text-dark-900 dark:hover:text-white transition-colors duration-500 inline-block hover:scale-105">together.</span>
             </h2>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mt-12 px-4">
+            <p className="max-w-lg mx-auto text-lg md:text-xl text-dark-500 dark:text-dark-400 font-light leading-relaxed mb-14 px-4">
+              Got a project in mind? I'd love to build something great with you.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center px-4">
               <Button variant="primary" size="lg" href="/contact" className="px-10 py-5 text-lg rounded-full shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 hover:-translate-y-1 transition-all">
                 Work With Me
               </Button>
