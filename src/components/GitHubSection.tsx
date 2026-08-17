@@ -270,9 +270,14 @@ const GitHubSection: React.FC = () => {
       const res = await fetch("/api/github");
       if (res.ok && (res.headers.get("content-type") || "").includes("application/json")) {
         const json = await res.json();
-        setData(json);
-        setLoading(false);
-        return;
+        // Only accept payloads with real user data. If the proxy's GitHub call
+        // failed (e.g. rate limit) it returns user: null, which would render
+        // followers as 0 instead of surfacing the problem.
+        if (json && json.user) {
+          setData(json);
+          setLoading(false);
+          return;
+        }
       }
       throw new Error("proxy unavailable");
     } catch {
@@ -284,8 +289,12 @@ const GitHubSection: React.FC = () => {
           fetch(`https://api.github.com/users/${GITHUB_USERNAME}`),
           fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`),
         ]);
+        // A non-2xx here is usually the unauthenticated rate limit. Throw so the
+        // error state renders instead of silently showing followers as 0.
+        if (!userRes.ok || !reposRes.ok) throw new Error("GitHub API unavailable");
         const user = await userRes.json();
         const repos = await reposRes.json();
+        if (!user?.login) throw new Error("GitHub API returned invalid data");
         setData(buildClientData(user, repos));
       } catch {
         setError("Couldn't reach GitHub right now. Try again in a moment.");

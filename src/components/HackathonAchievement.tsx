@@ -300,7 +300,7 @@ const HackathonAchievement: React.FC<HackathonAchievementProps> = ({
                 viewport={{ once: true, margin: "-60px" }}
                 variants={fadeUp}
                 custom={5}
-                className="flex flex-wrap gap-4"
+                className="flex flex-wrap justify-center lg:justify-start gap-4"
               >
                 {projectUrl ? (
                   <Button

@@ -207,6 +207,11 @@ export default async function handler(req, res) {
   };
 
   // Cache on Vercel's CDN so GitHub's rate limits are barely touched.
-  res.setHeader("Cache-Control", "public, s-maxage=1800, stale-while-revalidate=86400");
+  // Only cache complete payloads: if the user fetch failed (e.g. rate limit)
+  // don't cache a zeroed-out response and serve it to every visitor.
+  res.setHeader(
+    "Cache-Control",
+    user ? "public, s-maxage=1800, stale-while-revalidate=86400" : "no-store"
+  );
   return res.status(200).json(payload);
 }

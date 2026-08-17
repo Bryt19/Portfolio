@@ -230,7 +230,11 @@ const About: React.FC = () => {
                 </div>
               </div>
 
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex justify-center lg:justify-start"
+              >
                 <Button
                   variant="primary"
                   size="lg"

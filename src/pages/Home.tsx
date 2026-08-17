@@ -359,14 +359,14 @@ const Home: React.FC = () => {
               </span>
             </div>
             <h2 className="text-4xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-dark-900 dark:text-white">
-              Let's create <br />
+              Let's create <br className="md:hidden" />
               <span className="text-primary-500 hover:text-dark-900 dark:hover:text-white transition-colors duration-500 inline-block hover:scale-105">together.</span>
             </h2>
             <p className="max-w-lg mx-auto text-lg md:text-xl text-dark-500 dark:text-dark-400 font-light leading-relaxed mb-14 px-4">
               Got a project in mind? I'd love to build something great with you.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center px-4">
-              <Button variant="primary" size="lg" href="/contact" className="px-10 py-5 text-lg rounded-full shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 hover:-translate-y-1 transition-all">
+              <Button variant="primary" size="lg" href="/contact" className="px-14 py-5 text-lg rounded-full shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 hover:-translate-y-1 transition-all">
                 Work With Me
               </Button>
               <Button variant="secondary" size="lg" onClick={handleDownloadResume} className="px-10 py-5 text-lg rounded-full bg-transparent border-2 border-dark-900 dark:border-white hover:bg-dark-900 dark:hover:bg-white hover:text-white dark:hover:text-dark-900 transition-colors flex items-center justify-center">
