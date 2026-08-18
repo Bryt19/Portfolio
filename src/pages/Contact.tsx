@@ -225,7 +225,7 @@ const Contact: React.FC = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="rounded-full px-12 py-6 text-xl w-full md:w-auto"
+                  className="rounded-full w-full md:w-64 py-6 text-xl whitespace-nowrap"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>

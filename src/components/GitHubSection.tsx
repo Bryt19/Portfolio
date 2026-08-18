@@ -16,6 +16,9 @@ const GITHUB_USERNAME = "Bryt19";
 const PROFILE_URL = `https://github.com/${GITHUB_USERNAME}`;
 // Owner-verified total commits (GitHub's public search API undercounts).
 const COMMITS_TOTAL = 1200;
+// Owner-verified follower count (GitHub's API can serve stale/zeroed values
+// from the CDN cache, so pin the number we know to be correct).
+const FOLLOWERS_TOTAL = 6;
 
 interface ContributionDay {
   date: string;
@@ -249,7 +252,7 @@ function buildClientData(user: any, repos: any[]): GitHubData {
       stars: ownRepos.reduce((s: number, r: any) => s + (r.stargazers_count || 0), 0),
       forks: ownRepos.reduce((s: number, r: any) => s + (r.forks_count || 0), 0),
       commits: COMMITS_TOTAL,
-      followers: user?.followers ?? null,
+      followers: FOLLOWERS_TOTAL,
       following: user?.following ?? null,
     },
     contributions: { total: null, days: [] },
@@ -310,7 +313,7 @@ const GitHubSection: React.FC = () => {
 
   const stats: { icon: React.ElementType; label: string; value: number; suffix?: string }[] = data
     ? [
-        { icon: Users, label: "Followers", value: data.stats.followers ?? 0 },
+        { icon: Users, label: "Followers", value: data.stats.followers ?? FOLLOWERS_TOTAL },
         { icon: Star, label: "Stars", value: data.stats.stars, suffix: "+" },
         { icon: FolderGit2, label: "Repositories", value: data.stats.repos, suffix: "+" },
         { icon: GitCommit, label: "Total Commits", value: data.stats.commits, suffix: "+" },

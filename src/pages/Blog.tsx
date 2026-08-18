@@ -591,7 +591,7 @@ const Blog: React.FC = () => {
               />
               <Button
                 variant="primary"
-                className="rounded-full px-12 py-3 whitespace-nowrap"
+                className="rounded-full w-full sm:w-56 py-3 whitespace-nowrap"
                 onClick={handleSubscribe}
               >
                 Subscribe

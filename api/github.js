@@ -9,6 +9,10 @@
 
 const GITHUB_USER = process.env.GITHUB_USERNAME || "Bryt19";
 const TOKEN = process.env.GITHUB_TOKEN || "";
+// Owner-verified follower count. GitHub's API can return stale/zeroed values
+// when Vercel's shared IPs hit the unauthenticated rate limit, so pin the
+// number we know to be correct.
+const FOLLOWERS_TOTAL = 6;
 
 const GH_HEADERS = {
   Accept: "application/vnd.github+json",
@@ -196,7 +200,7 @@ export default async function handler(req, res) {
       forks: ownRepos.reduce((s, r) => s + (r.forks_count || 0), 0),
       // Owner-verified total: GitHub's public search API undercounts. Override via GITHUB_COMMITS.
       commits: parseInt(process.env.GITHUB_COMMITS || "1200", 10),
-      followers: user?.followers ?? null,
+      followers: FOLLOWERS_TOTAL,
       following: user?.following ?? null,
     },
     languages,
