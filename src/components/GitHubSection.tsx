@@ -2,12 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useMotionValue, useTransform, animate, useInView } from "framer-motion";
 import {
   ArrowUpRight,
+  Award,
   CalendarDays,
   FolderGit2,
   GitCommit,
   Github,
   Star,
-  Users,
 } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import Button from "./Button";
@@ -16,9 +16,25 @@ const GITHUB_USERNAME = "Bryt19";
 const PROFILE_URL = `https://github.com/${GITHUB_USERNAME}`;
 // Owner-verified total commits (GitHub's public search API undercounts).
 const COMMITS_TOTAL = 1200;
-// Owner-verified follower count (GitHub's API can serve stale/zeroed values
-// from the CDN cache, so pin the number we know to be correct).
-const FOLLOWERS_TOTAL = 6;
+// GitHub achievements badges. Not exposed via the public API, so listed here
+// (edit/remove to match the profile).
+const ACHIEVEMENTS: { emoji: string; name: string; description: string }[] = [
+  {
+    emoji: "🦈",
+    name: "Pull Shark",
+    description: "Opened a pull request that was merged",
+  },
+  {
+    emoji: "🔥",
+    name: "YOLO",
+    description: "Merged a pull request without a code review",
+  },
+  {
+    emoji: "⚡",
+    name: "Quickdraw",
+    description: "Closed an issue or pull request within 5 minutes of opening it",
+  },
+];
 
 interface ContributionDay {
   date: string;
@@ -34,7 +50,6 @@ interface GitHubData {
     url: string;
     bio: string;
     location: string;
-    followers: number;
     following: number;
     publicRepos: number;
   } | null;
@@ -43,7 +58,6 @@ interface GitHubData {
     stars: number;
     forks: number;
     commits: number;
-    followers: number | null;
     following: number | null;
   };
   contributions: { total: number | null; days: ContributionDay[] };
@@ -242,7 +256,6 @@ function buildClientData(user: any, repos: any[]): GitHubData {
           url: user.html_url,
           bio: user.bio,
           location: user.location,
-          followers: user.followers,
           following: user.following,
           publicRepos: user.public_repos,
         }
@@ -252,7 +265,6 @@ function buildClientData(user: any, repos: any[]): GitHubData {
       stars: ownRepos.reduce((s: number, r: any) => s + (r.stargazers_count || 0), 0),
       forks: ownRepos.reduce((s: number, r: any) => s + (r.forks_count || 0), 0),
       commits: COMMITS_TOTAL,
-      followers: FOLLOWERS_TOTAL,
       following: user?.following ?? null,
     },
     contributions: { total: null, days: [] },
@@ -275,7 +287,7 @@ const GitHubSection: React.FC = () => {
         const json = await res.json();
         // Only accept payloads with real user data. If the proxy's GitHub call
         // failed (e.g. rate limit) it returns user: null, which would render
-        // followers as 0 instead of surfacing the problem.
+        // zeroed stats instead of surfacing the problem.
         if (json && json.user) {
           setData(json);
           setLoading(false);
@@ -293,7 +305,7 @@ const GitHubSection: React.FC = () => {
           fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`),
         ]);
         // A non-2xx here is usually the unauthenticated rate limit. Throw so the
-        // error state renders instead of silently showing followers as 0.
+        // error state renders instead of silently showing zeroed stats.
         if (!userRes.ok || !reposRes.ok) throw new Error("GitHub API unavailable");
         const user = await userRes.json();
         const repos = await reposRes.json();
@@ -313,7 +325,6 @@ const GitHubSection: React.FC = () => {
 
   const stats: { icon: React.ElementType; label: string; value: number; suffix?: string }[] = data
     ? [
-        { icon: Users, label: "Followers", value: data.stats.followers ?? FOLLOWERS_TOTAL },
         { icon: Star, label: "Stars", value: data.stats.stars, suffix: "+" },
         { icon: FolderGit2, label: "Repositories", value: data.stats.repos, suffix: "+" },
         { icon: GitCommit, label: "Total Commits", value: data.stats.commits, suffix: "+" },
@@ -426,6 +437,37 @@ const GitHubSection: React.FC = () => {
                     </div>
                   </motion.div>
                 ))}
+
+                {/* GitHub achievements (not exposed via the public API) */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 3 * 0.08 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <Award className="w-4 h-4 text-primary-500" />
+                    <span className="text-[10px] uppercase tracking-[0.3em] text-dark-400 dark:text-dark-500 font-bold">
+                      Achievements
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-2.5">
+                    {ACHIEVEMENTS.map((achievement) => (
+                      <div
+                        key={achievement.name}
+                        title={achievement.description}
+                        className="group flex items-center gap-3"
+                      >
+                        <span className="w-9 h-9 flex items-center justify-center rounded-full border border-dark-200 dark:border-dark-700 bg-white dark:bg-dark-900 text-lg group-hover:border-primary-500 transition-colors">
+                          {achievement.emoji}
+                        </span>
+                        <span className="text-sm md:text-base font-black text-dark-900 dark:text-white tracking-tight leading-tight">
+                          {achievement.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
               </motion.div>
 
               {/* Contribution graph */}
