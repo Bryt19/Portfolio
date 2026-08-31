@@ -6,7 +6,7 @@ import Button from "./Button";
 /* ─── Data (edit here) ───────────────────────────────────────────── */
 // 🔗 Replace with the real links when available.
 // If a URL is null, the matching button renders as a clearly-marked placeholder.
-const TRUSTLOCK_URL: string | null = null; // e.g. "https://trustlock.vercel.app"
+const TRUSTLOCK_URL: string | null = "https://trust-lock-seven.vercel.app/";
 const EAG_HACKATHON_URL: string | null =
   "https://x.com/EthAppsGuild/status/2085565733388591363?s=20";
 

@@ -112,7 +112,7 @@ const education = [
     degree: "BSc. Software Engineering",
     institution: "Ghana Communication Technology University",
     location: "Tesano, Accra — Ghana",
-    startDate: "Sep 2024",
+    startDate: "Jan 2024",
     endDate: null,
     current: true,
     gpa: "In Progress",
