@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 
@@ -9,45 +9,23 @@ const Navbar: React.FC = () => {
   const { isDark, toggleTheme } = useTheme();
   const location = useLocation();
 
-  // Raw scroll position as a motion value
-  const scrollY = useMotionValue(0);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Smooth it so rapid scroll doesn't look jumpy
-  const smoothScrollY = useSpring(scrollY, { stiffness: 120, damping: 24, restDelta: 0.001 });
-
-  // Interpolated values — 0px = fully blended, 120px = fully solid
-  //   bg opacity:  0.05 → 0.88
-  //   blur:        4px  → 20px
-  //   border:      0.08 → 0.7
-  //   shadow:      0    → 1
-  const bgOpacity   = useTransform(smoothScrollY, [0, 120], [0.05, 0.88]);
-  const blurAmount  = useTransform(smoothScrollY, [0, 120], [4, 20]);
-  const borderOp    = useTransform(smoothScrollY, [0, 120], [0.08, 0.7]);
-  const shadowOp    = useTransform(smoothScrollY, [0, 120], [0, 0.14]);
-
-  // Compose CSS strings from the motion values
-  const bgLight  = useTransform(bgOpacity,  (v) => `rgba(255,255,255,${v})`);
-  const bgDark   = useTransform(bgOpacity,  (v) => `rgba(10,10,18,${v})`);
-  const blur     = useTransform(blurAmount, (v) => `blur(${v}px)`);
-  const border   = useTransform(borderOp,   (v) =>
-    isDark
-      ? `1px solid rgba(255,255,255,${v * 0.25})`
-      : `1px solid rgba(0,0,0,${v * 0.12})`
-  );
-  const shadow   = useTransform(shadowOp,   (v) =>
-    `0 8px 40px rgba(0,0,0,${v}), 0 2px 8px rgba(0,0,0,${v * 0.5})`
-  );
-
-  // Close mobile menu on route change
-  useEffect(() => { setIsOpen(false); }, [location.pathname]);
-
-  // Sync real window scroll into the motion value
   useEffect(() => {
-    const update = () => scrollY.set(window.scrollY);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, [scrollY]);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 10);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { label: "Home",     path: "/" },
@@ -68,23 +46,26 @@ const Navbar: React.FC = () => {
     </Link>
   );
 
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 sm:pt-5 pointer-events-none">
-      <div className="relative w-full max-w-3xl pointer-events-auto">
+  const [isDesktop, setIsDesktop] = useState(true);
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
-        {/* ── Capsule ── */}
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
+      <div className="relative w-full flex justify-center pointer-events-auto">
         <motion.div
           initial={{ y: -72, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.08 }}
-          style={{
-            background: isDark ? bgDark : bgLight,
-            backdropFilter: blur,
-            WebkitBackdropFilter: blur,
-            border,
-            boxShadow: shadow,
-          }}
-          className="flex items-center justify-between gap-4 pl-5 pr-2.5 h-14 rounded-full"
+          className={`flex items-center justify-between gap-4 motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            isScrolled || !isDesktop
+              ? "w-[calc(100%-2rem)] max-w-3xl h-14 rounded-full mt-4 pl-5 pr-2.5 bg-white/90 dark:bg-dark-950/90 backdrop-blur-xl border border-dark-200/50 dark:border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.2)]"
+              : "w-full max-w-full h-20 rounded-none mt-0 px-6 md:px-12 lg:px-24 bg-transparent border border-transparent shadow-none"
+          }`}
         >
           {logo}
 
