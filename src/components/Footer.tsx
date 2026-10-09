@@ -10,10 +10,12 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-white dark:bg-dark-950 border-t border-dark-100 dark:border-dark-800">
-      <div className="container-custom">
-        <div className="py-20 md:py-32">
-          <div className="flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-8">
+    <footer className="relative bg-white dark:bg-dark-950 border-t border-dark-100 dark:border-dark-800 overflow-hidden">
+
+
+      <div className="container-custom relative">
+        <div className="pt-20 md:pt-32 pb-12 md:pb-16">
+          <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-8">
             
             {/* Brand Logo & Tagline */}
             <div className="lg:w-1/3 space-y-8">
@@ -88,18 +90,27 @@ const Footer: React.FC = () => {
                 </div>
               </div>
             </div>
-
-          </div>
-
-          <div className="mt-20 pt-8 border-t border-dark-100 dark:border-dark-800 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm font-bold text-dark-400 uppercase tracking-widest">
-              © {new Date().getFullYear()} BRIGHT AKOTO. ALL RIGHTS RESERVED.
-            </p>
-            <p className="text-sm font-bold text-dark-400 uppercase tracking-widest">
-              BUILT WITH PRECISION
-            </p>
           </div>
         </div>
+
+        <div className="pt-6 pb-2 border-t border-dark-100 dark:border-dark-800 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+          <p className="text-sm font-bold text-dark-400 uppercase tracking-widest">
+            © {new Date().getFullYear()} BRIGHT AKOTO. ALL RIGHTS RESERVED.
+          </p>
+          <p className="text-sm font-bold text-dark-400 uppercase tracking-widest">
+            BUILT WITH PRECISION
+          </p>
+        </div>
+      </div>
+
+      {/* Giant Watermark at the bottom */}
+      <div
+        className="pointer-events-none flex justify-center overflow-hidden select-none touch-none w-full"
+        aria-hidden
+      >
+        <span className="text-[20vw] leading-[0.75] font-mono font-black whitespace-nowrap translate-y-[15%] bg-gradient-to-b from-primary-500/15 to-transparent dark:from-primary-500/10 bg-clip-text text-transparent">
+          {'<$.dev/>'}
+        </span>
       </div>
     </footer>
   );
