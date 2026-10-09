@@ -1,6 +1,5 @@
-import React from "react";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import Button from "../components/Button";
 import HackathonAchievement from "../components/HackathonAchievement";
 
@@ -61,14 +60,23 @@ const AnimatedSection: React.FC<{
 
 /* ─── Data ────────────────────────────────────────────────────────── */
 const skills = [
-  { name: "TypeScript", level: 90, category: "frontend" },
-  { name: "React / Next.js", level: 95, category: "frontend" },
-  { name: "Tailwind CSS", level: 95, category: "frontend" },
-  { name: "SEO Optimization", level: 85, category: "tools" },
-  { name: "JavaScript", level: 90, category: "frontend" },
-  { name: "HTML5 / CSS3", level: 95, category: "frontend" },
-  { name: "Node.js", level: 75, category: "backend" },
-  { name: "Git / Shell", level: 85, category: "tools" },
+  // Languages
+  { name: "HTML5", level: 95, category: "languages", learning: false },
+  { name: "CSS3", level: 95, category: "languages", learning: false },
+  { name: "JavaScript ES6+", level: 90, category: "languages", learning: false },
+  { name: "Angular/TypeScript", level: 90, category: "languages", learning: false },
+  { name: "Solidity", level: 45, category: "languages", learning: true },
+  // Frontend
+  { name: "React/Next.js", level: 95, category: "frontend", learning: false },
+  { name: "Tailwind CSS", level: 95, category: "frontend", learning: false },
+  // Web3
+  { name: "Web3", level: 72, category: "web3", learning: false },
+  { name: "ethers.js", level: 70, category: "web3", learning: false },
+  // Backend & Databases
+  { name: "PostgreSQL", level: 78, category: "backend", learning: false },
+  // Tools
+  { name: "Git", level: 88, category: "tools", learning: false },
+  { name: "GitHub", level: 88, category: "tools", learning: false },
 ];
 
 const experiences = [
@@ -154,6 +162,16 @@ const education = [
 const About: React.FC = () => {
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
+  const shouldReduceMotion = useReducedMotion();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev === 0 ? 1 : 0));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [shouldReduceMotion]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-dark-950 overflow-x-hidden">
@@ -199,7 +217,7 @@ const About: React.FC = () => {
       {/* ── Bio ── */}
       <section className="section-padding">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -213,19 +231,13 @@ const About: React.FC = () => {
                 </h2>
                 <div className="space-y-8 text-xl md:text-2xl text-dark-800 dark:text-dark-200 leading-relaxed font-light">
                   <p>
-                    I started my journey in web development over 3 years ago,
-                    driven by a fascination with how technology can solve
-                    real-world problems.
+                    Over the past 3 years, my curiosity in web development has evolved into a mission: building intuitive, accessible software. As a Software Engineering student at Ghana Communication Technology University, I specialize in crafting fast interfaces with React and TypeScript.
                   </p>
                   <p>
-                    What began as curiosity has evolved into a career mission:
-                    creating software that feels as natural and intuitive as the
-                    people who use it.
+                    After honing my frontend skills during an internship at Git Plus, I expanded into Web3. Building TrustLock, an Ethereum escrow platform, sparked my passion for blockchain and led to top finishes at the EAG and HackHive 2.0 2026 hackathons.
                   </p>
                   <p>
-                    Currently, I'm specialising in modern React ecosystems and
-                    scalable system architecture, always pushing the boundaries
-                    of what's possible on the web.
+                    Today, I aim to bridge careful frontend craft with Web3 infrastructure, making decentralized apps accessible and user-friendly for everyone.
                   </p>
                 </div>
               </div>
@@ -246,23 +258,58 @@ const About: React.FC = () => {
               </motion.div>
             </motion.div>
 
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              variants={scaleIn}
-              className="relative aspect-square rounded-[1rem] overflow-hidden bg-dark-50 dark:bg-dark-900 border border-dark-100 dark:border-dark-800"
-            >
-              <img
-                src="/img/333.webp"
-                alt="Bright Akoto"
-                className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700"
-              />
-              {/* Decorative accent */}
-              <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
-            </motion.div>
+              <div className="flex flex-col items-center gap-6">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-80px" }}
+                  variants={scaleIn}
+                  className="relative aspect-square w-full max-w-sm mx-auto lg:max-w-none rounded-[1rem] overflow-hidden bg-dark-50 dark:bg-dark-900 border border-dark-100 dark:border-dark-800 shadow-2xl"
+                >
+                  {/* Static base image — stays visible during crossfades */}
+                  <img
+                    src="/img/333.webp"
+                    alt="Bright Akoto Casual"
+                    className="absolute inset-0 w-full h-full object-cover z-0"
+                  />
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={currentImageIndex}
+                      src={currentImageIndex === 1 ? "/img/proff.webp" : "/img/333.webp"}
+                      alt={
+                        currentImageIndex === 1
+                          ? "Bright Akoto Professional"
+                          : "Bright Akoto Casual"
+                      }
+                      initial={{ opacity: 0, scale: 1.06 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.94 }}
+                      transition={{ duration: 0.8, ease: "easeInOut" }}
+                      className="absolute inset-0 w-full h-full object-cover z-10"
+                    />
+                  </AnimatePresence>
+                  {/* Decorative accent */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-20" />
+                </motion.div>
+                
+                {/* Progress Dots */}
+                {!shouldReduceMotion && (
+                  <div className="flex gap-3 items-center">
+                    <motion.div 
+                      animate={{ opacity: currentImageIndex === 0 ? 1 : 0.3 }} 
+                      transition={{ duration: 0.5 }}
+                      className="w-2.5 h-2.5 rounded-full bg-primary-500" 
+                    />
+                    <motion.div 
+                      animate={{ opacity: currentImageIndex === 1 ? 1 : 0.3 }} 
+                      transition={{ duration: 0.5 }}
+                      className="w-2.5 h-2.5 rounded-full bg-primary-500" 
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
       </section>
 
       {/* ── Skills & Experience ── */}

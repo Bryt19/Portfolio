@@ -16,6 +16,53 @@ const Projects: React.FC = () => {
 
   const projects: Project[] = [
     {
+      id: "all",
+      title: "TrustLock (WeWire Version)",
+      description:
+        "TrustLock rebuilt on WeWire's sandbox as its transactional rails. An on-chain escrow and reputation platform for rentals, verified deliveries and freelance transactions, where funds are held until agreed conditions are met.",
+      longDescription:
+        "TrustLock (WeWire Version) is a team-built edition of the TrustLock escrow and reputation platform that uses WeWire's sandbox as its transactional rails for escrow payments. It supports rentals, verified deliveries and freelance transactions, and its flows hold funds until agreed conditions are met.",
+      image: "/img/trustlockhq.webp",
+      technologies: [
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Local Fiat Payments",
+        "Stablecoins",
+        "WeWire Sandbox"
+      ],
+      githubUrl: "https://github.com/Bryt19/Wewire",
+      liveUrl: "https://trustlockhq.vercel.app/",
+      featured: true,
+      collaborators: ["Team Project"],
+      year: "2026",
+    },
+    {
+      id: "0",
+      title: "TrustLock (EAG Version)",
+      description:
+        "On-chain escrow and reputation platform for rentals, verified deliveries, and freelance transactions. Smart-contract flows hold funds until agreed conditions are met.",
+      longDescription:
+        "An Ethereum-powered escrow platform that makes peer-to-peer transactions safer — funds stay locked in smart contracts until both parties' agreed conditions are met. Built and presented for the EAG Hackathon 2026.",
+      image: "/img/trust1.webp",
+      technologies: [
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Ethereum",
+        "Ethers.js",
+        "Hardhat",
+        "Meta Mask",
+        "Smart Contracts"
+      ],
+      githubUrl: "https://github.com/Bryt19/TrustLock",
+      liveUrl: "https://trust-lock-seven.vercel.app/",
+      featured: true,
+      collaborators: ["Team Project"],
+      year: "2026",
+    },
+
+    {
       id: "1",
       title: "TradeLens",
       description:
@@ -186,7 +233,7 @@ const Projects: React.FC = () => {
       image: "/img/klavora.webp",
       technologies: ["React", "TypeScript", "Tailwind CSS", "Next.js", "PostgreSQL","Supabase", "Node.js", "Prisma","Vercel","Railway", "Local Storage","HTML5"],
       githubUrl: "https://github.com/richkid2xi/Klavora/tree/develop",
-      liveUrl: "https://klavora.vercel.app/",
+      liveUrl: "https://klavora.store/",
       featured: false,
       collaborators: ["Team Project"],
       year: "2026",
@@ -225,6 +272,7 @@ const Projects: React.FC = () => {
 
   const categories = [
     { id: "all", name: "All Projects" },
+    { id: "web3", name: "Web3" },
     { id: "frontend", name: "Frontend" },
     { id: "backend", name: "Backend" },
     { id: "fullstack", name: "Full Stack" },
@@ -266,6 +314,19 @@ const Projects: React.FC = () => {
             ["Node.js", "PostgreSQL", "MongoDB"].includes(tech)
           );
           if (!(hasFrontend && hasBackend)) return false;
+        }
+        if (filter === "web3") {
+          const hasWeb3 = project.technologies.some(
+            (tech) =>
+              ["Solidity", "ethers.js", "Ethereum", "Smart Contracts", "Polygon", "WeWire", "Stablecoins", "Crypto", "CryptoWallets", ].some((keyword) =>
+                tech.toLowerCase().includes(keyword.toLowerCase())
+              )
+          );
+          if (!hasWeb3) return false;
+        }
+        if (filter === "collab") {
+          if (!project.collaborators || project.collaborators.length === 0)
+            return false;
         }
       }
 

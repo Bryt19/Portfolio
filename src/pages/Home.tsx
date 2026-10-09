@@ -41,7 +41,7 @@ const Home: React.FC = () => {
     <div className="min-h-screen bg-white dark:bg-dark-950">
       {/* Hero Section */}
       <MinimalistHero
-        titleH1="Bright Akoto | Frontend Developer & Software Engineer"
+        titleH1="Bright Akoto | Software Engineer & Web3 Developer"
         mainText={<>I'm <span className="font-bold text-dark-900 dark:text-white">Bright Akoto</span>, a developer focused on blending modern performance with a warm, intuitive user experience. Delivering digital products that feel as good as they work.</>}
         readMoreLink="/about"
         imageSrc="/img/11.webp"
@@ -63,7 +63,7 @@ const Home: React.FC = () => {
               { number: 30, suffix: "+", label: "Projects Completed" },
               { number: 3, suffix: "+", label: "Years Experience" },
               { number: 20, suffix: "+", label: "Happy Clients" },
-              { number: 100, suffix: "%", label: "Success Rate" },
+              { number: 99, suffix: "%", label: "Success Rate" },
             ].map((stat, index) => (
               <motion.div 
                 key={index}
@@ -100,11 +100,10 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-16">
-            {[
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-16">              {[
               {
-                title: "Frontend Development",
-                description: "Crafting beautiful, responsive, and intuitive interfaces using modern React ecosystems.",
+                title: "Software Engineering",
+                description: "Building reliable, well-structured software systems with clean code and thoughtful architecture.",
                 step: "01"
               },
               {
@@ -118,8 +117,8 @@ const Home: React.FC = () => {
                 step: "03"
               },
               {
-                title: "System Architecture",
-                description: "Planning and implementing robust foundations for long-term scalability and efficiency.",
+                title: "Web3 Development",
+                description: "Developing decentralized applications on modern blockchain platforms and smart-contract ecosystems.",
                 step: "04"
               },
             ].map((skill, index) => (
@@ -231,7 +230,7 @@ const Home: React.FC = () => {
             <h3 className="text-4xl md:text-6xl font-black text-dark-900 dark:text-white tracking-tighter">Selected Projects.</h3>
           </div>
 
-          <div className="grid grid-cols-1 gap-32">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24">
             {[
               {
                 title: "TradeLens",
@@ -256,6 +255,17 @@ const Home: React.FC = () => {
                 link: "/projects"
               },
               {
+                title: "TrustLock (WeWire)",
+                description: "TrustLock rebuilt using WeWire's sandbox as the transactional rails for escrow payments.",
+                image: "/img/trustlockhq.webp",
+                tags: ["Escrow", "Web3"],
+                technologies: ["React", "TypeScript", "WeWire", "Sandbox"],
+                year: "2026",
+                liveUrl: "https://trustlockhq.vercel.app/",
+                githubUrl: "https://github.com/Bryt19/Wewire",
+                link: "/projects"
+              },
+              {
                 title: "Lumina Support",
                 description: "Customer support platform with ticketing, live chat, and a knowledge base.",
                 image: "/img/lumina.webp",
@@ -265,7 +275,7 @@ const Home: React.FC = () => {
                 liveUrl: "https://lumina-help.vercel.app/",
                 githubUrl: "https://github.com/Bryt19/Lumina",
                 link: "/projects"
-              }
+              },
             ].map((project, index) => (
               <motion.div
                 key={index}
@@ -273,13 +283,13 @@ const Home: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="group cursor-pointer grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+                className="group cursor-pointer"
                 onClick={() => window.location.href = project.link}
               >
-                <div className="relative aspect-video rounded-[1.5rem] overflow-hidden bg-dark-100 dark:bg-dark-900 mx-auto w-full max-w-[500px]">
+                <div className="relative aspect-video rounded-[1.5rem] overflow-hidden bg-dark-100 dark:bg-dark-900 w-full">
                   <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 group-hover:-rotate-1 transition-all duration-700 opacity-90 group-hover:opacity-100" loading="lazy" />
                 </div>
-                <div className="md:px-4">
+                <div className="mt-6 md:mt-8">
                   <div className="flex flex-wrap items-center gap-4 mb-4">
                     {project.tags.map(tag => (
                       <span key={tag} className="text-[10px] uppercase tracking-[0.2em] font-black text-primary-500">{tag}</span>
@@ -288,13 +298,13 @@ const Home: React.FC = () => {
                       <span className="text-[10px] uppercase tracking-[0.2em] font-black text-dark-400 dark:text-dark-600">{project.year}</span>
                     )}
                   </div>
-                  <h4 className="text-4xl md:text-5xl font-black mb-4 text-dark-900 dark:text-white group-hover:translate-x-4 transition-transform duration-500">{project.title}</h4>
-                  <p className="text-dark-500 dark:text-dark-400 text-lg font-light mb-6 max-w-md">
+                  <h4 className="text-3xl md:text-4xl font-black mb-3 text-dark-900 dark:text-white group-hover:translate-x-4 transition-transform duration-500 tracking-tighter">{project.title}</h4>
+                  <p className="text-dark-500 dark:text-dark-400 text-base md:text-lg font-light mb-5 max-w-md">
                     {project.description}
                   </p>
-                  <div className="flex flex-wrap gap-3 mb-8">
+                  <div className="flex flex-wrap gap-3 mb-6">
                     {project.technologies.map(tech => (
-                      <span key={tech} className="px-3.5 py-1.5 bg-white dark:bg-dark-800 border border-dark-200 dark:border-dark-700 text-[10px] font-black uppercase tracking-[0.2em] text-dark-600 dark:text-dark-300 rounded-full">
+                      <span key={tech} className="px-3 py-1.5 bg-white dark:bg-dark-800 border border-dark-200 dark:border-dark-700 text-[10px] font-black uppercase tracking-[0.2em] text-dark-600 dark:text-dark-300 rounded-full">
                         {tech}
                       </span>
                     ))}
@@ -322,7 +332,7 @@ const Home: React.FC = () => {
                         View Code <ExternalLink className="w-4 h-4" />
                       </a>
                     )}
-                    <ArrowRight className="w-6 h-6 text-dark-900 dark:text-white group-hover:translate-x-4 transition-transform duration-300" />
+                    <ArrowRight className="w-5 h-5 text-dark-900 dark:text-white group-hover:translate-x-4 transition-transform duration-300" />
                   </div>
                 </div>
               </motion.div>
@@ -331,22 +341,26 @@ const Home: React.FC = () => {
 
           <div className="mt-20 flex justify-center">
             <Button variant="outline" href="/projects" className="border-dark-900 dark:border-white text-dark-900 dark:text-white hover:bg-dark-900 dark:hover:bg-white hover:text-white dark:hover:text-dark-900">
-              View All Works
+              View All Projects
             </Button>
           </div>
         </div>
       </section>
 
       {/* GitHub */}
-      <GitHubSection />
+      <GitHubSection />      {/* Call to Action */}
+      <section className="section-padding relative overflow-hidden bg-white dark:bg-dark-950 border-t border-dark-100 dark:border-dark-800">
+        {/* Background treatment */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary-500/10 blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-secondary-500/10 blur-3xl" />
+        </div>
 
-      {/* Call to Action */}
-      <section className="section-padding">
-        <div className="container-custom text-center">
+        <div className="container-custom text-center relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
           >
             <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-green-500/30 bg-green-500/10 mb-10">
@@ -358,17 +372,26 @@ const Home: React.FC = () => {
                 Available for new projects
               </span>
             </div>
-            <h2 className="text-4xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-dark-900 dark:text-white">
-              Let's create <br className="md:hidden" />
-              <span className="text-primary-500 hover:text-dark-900 dark:hover:text-white transition-colors duration-500 inline-block hover:scale-105">together.</span>
+
+            <h2 className="text-4xl md:text-7xl font-black mb-6 leading-tight tracking-tighter text-dark-900 dark:text-white">
+              Let's build products that <br className="hidden md:block" />
+              <span className="relative inline-block">
+                <span className="text-primary-500">web</span>
+                <span className="text-dark-400 dark:text-dark-600"> and </span>
+                <span className="text-secondary-500">Web3</span>
+                <span className="text-dark-400 dark:text-dark-600"> users love</span>
+              </span>
             </h2>
-            <p className="max-w-lg mx-auto text-lg md:text-xl text-dark-500 dark:text-dark-400 font-light leading-relaxed mb-14 px-4">
-              Got a project in mind? I'd love to build something great with you.
+
+            <p className="max-w-xl mx-auto text-lg md:text-xl text-dark-500 dark:text-dark-400 font-light leading-relaxed mb-12 px-4">
+              From responsive web apps to decentralized experiences — I turn ambitious ideas into polished products that move fast and feel human.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center px-4">
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <Button variant="primary" size="lg" href="/contact" className="px-14 py-5 text-lg rounded-full shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 hover:-translate-y-1 transition-all">
-                Work With Me
+                Let's work together
               </Button>
+
               <Button variant="secondary" size="lg" onClick={handleDownloadResume} className="px-10 py-5 text-lg rounded-full bg-transparent border-2 border-dark-900 dark:border-white hover:bg-dark-900 dark:hover:bg-white hover:text-white dark:hover:text-dark-900 transition-colors flex items-center justify-center">
                 <Download className="mr-2 w-5 h-5" />
                 Download Resume
