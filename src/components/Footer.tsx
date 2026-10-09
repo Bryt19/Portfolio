@@ -105,11 +105,13 @@ const Footer: React.FC = () => {
 
       {/* Giant Watermark at the bottom */}
       <div
-        className="pointer-events-none flex justify-center overflow-hidden select-none touch-none w-full"
+        className="pointer-events-none flex justify-center select-none touch-none w-full pt-[1vw] pb-[3vw]"
         aria-hidden
       >
-        <span className="text-[20vw] leading-[0.75] font-mono font-black whitespace-nowrap translate-y-[15%] bg-gradient-to-b from-primary-500/15 to-transparent dark:from-primary-500/10 bg-clip-text text-transparent">
-          {'<$.dev/>'}
+        <span className="text-[20vw] leading-[0.75] font-mono font-black whitespace-nowrap bg-gradient-to-b from-primary-500/15 to-transparent dark:from-primary-500/10 bg-clip-text text-transparent">
+          {'<$'}
+          <span className="text-dark-900/15 dark:text-white/10">.</span>
+          {'dev/>'}
         </span>
       </div>
     </footer>

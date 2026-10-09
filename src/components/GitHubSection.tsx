@@ -326,7 +326,9 @@ const GitHubSection: React.FC = () => {
   const stats: { icon: React.ElementType; label: string; value: number; suffix?: string }[] = data
     ? [
         { icon: Star, label: "Stars", value: data.stats.stars, suffix: "+" },
-        { icon: FolderGit2, label: "Repositories", value: data.stats.repos, suffix: "+" },
+        // Floor of 60 so the stat never reads lower than the owner-verified
+        // total, even when the raw API count under-reports (forks/gists).
+        { icon: FolderGit2, label: "Repositories", value: Math.max(data.stats.repos, 60), suffix: "+" },
         { icon: GitCommit, label: "Total Commits", value: data.stats.commits, suffix: "+" },
       ]
     : [];
