@@ -15,7 +15,7 @@ import Button from "./Button";
 const GITHUB_USERNAME = "Bryt19";
 const PROFILE_URL = `https://github.com/${GITHUB_USERNAME}`;
 // Owner-verified total commits (GitHub's public search API undercounts).
-const COMMITS_TOTAL = 1200;
+const COMMITS_TOTAL = 1400;
 // GitHub achievements badges. Not exposed via the public API, so listed here
 // (edit/remove to match the profile).
 const ACHIEVEMENTS: { emoji: string; name: string; description: string }[] = [
